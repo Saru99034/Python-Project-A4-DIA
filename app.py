@@ -1,18 +1,28 @@
 from flask import Flask, render_template, request
-import pickle
 app = Flask(__name__)
+import pandas as pd
+import joblib  
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+import joblib
 
-# import dataset cleaned before using scaler
+# Create a custom transformer to select numerical columns
+from sklearn.base import BaseEstimator, TransformerMixin
+class NumericalSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, pca):
+        self.pca = pca
 
-# codage de pipeline
-
-
-
-#with open('model.pkl', 'wb') as file: 
-    #pickle.dump(model, file)
-
-#with open('model.pkl', 'rb') as file: 
-    #model = pickle.load(file)
+    def transform(self, X):
+        X = X.select_dtypes(include=['int64', 'float64']).copy()
+        reduced_variables = self.pca.transform(X[['Administrative_Duration', 'Administrative', 'ProductRelated_Duration', 'ProductRelated', 'Informational_Duration', 'Informational']])
+        X = X.drop(['Administrative_Duration', 'Administrative', 'ProductRelated_Duration', 'ProductRelated', 'Informational_Duration', 'Informational', 'BounceRates'], axis=1)
+        # We add the reduced variable
+        X['pca1'] = reduced_variables[:, 0]
+        X['pca2'] = reduced_variables[:, 1]
+        return X
+with open('model.pkl', 'rb') as file: 
+    loaded_pipeline  = joblib.load(file)
 
 @app.route('/')
 def index():
@@ -38,15 +48,20 @@ def predict():
         traffic_type = request.form.get('traffic_type', type=int)
         visitor_type = request.form.get('visitor_type')
         weekend = request.form.get('weekend', type=bool)
-        features = [
+        features = pd.DataFrame([[
             administrative, administrative_duration, informational,
             informational_duration, product_related, product_related_duration,
             bounce_rates, exit_rates, page_values, special_day,
             month, operating_systems, browser, region, traffic_type,
             visitor_type, weekend
-        ]
-        #prediction = model.predict([features])
-        prediction = [0,0]
+        ]], columns=[
+            'Administrative', 'Administrative_Duration', 'Informational',
+            'Informational_Duration', 'ProductRelated',
+            'ProductRelated_Duration', 'BounceRates', 'ExitRates',
+            'PageValues', 'SpecialDay', 'Month', 'OperatingSystems',
+            'Browser', 'Region', 'TrafficType', 'VisitorType', 'Weekend'
+        ])  
+        prediction = loaded_pipeline.predict(features)
         return render_template('result.html', prediction=prediction[0])
 if __name__ == '__main__':
     app.run(debug=True)
