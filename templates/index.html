@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Shoppers Intention</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  </style>
+  <body>
+    <div class="navbar">
+      <a  class="logo" href="#"><i class="fa fa-shopping-cart" style="color:white"></i></a>
+      <a href="https://github.com/Saru99034/Python-Project-A4-DIA"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+      </svg></a>
+    </div>
+    <div id="typing-container" class="typing-container">
+        <span id="typing-text"></span>
+    </div>
+    
+    <div class="split-container">
+        <div class="left-half">
+            <img src="{{ url_for('static', filename='images/catthinking.gif') }}" alt="">
+        </div>
+        <div class="right-half">
+            <div class="form-container">
+                <form action="{{ url_for('predict')}}" method="post">
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="administrative">Administrative:</label>
+                            <input type="number" id="administrative" name="administrative">
+                        </div>
+                        <div class="container-input">
+                            <label for="administrative_duration">Administrative Duration:</label>
+                            <input type="number" step="0.01" id="administrative_duration" name="administrative_duration">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="informational">Informational:</label>
+                            <input type="number" id="informational" name="informational">
+                        </div>
+                        <div class="container-input">
+                            <label for="product_related">Product Related:</label>
+                            <input type="number" id="product_related" name="product_related">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="informational_duration">Informational duration:</label>
+                            <input type="number" step="0.01"  id="informational_duration" name="informational_duration">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="product_related_duration">Product Related Duration:</label>
+                            <input type="number" step="0.01" id="product_related_duration" name="product_related_duration">
+                        </div>
+                        <div class="container-input">
+                            <label for="bounce_rates">Bounce Rates:</label>
+                            <input type="number" step="0.01" id="bounce_rates" name="bounce_rates">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="exit_rates">Exit Rates:</label>
+                            <input type="number" step="0.01" id="exit_rates" name="exit_rates">
+                        </div>
+                        <div class="container-input">
+                            <label for="page_values">Page Values:</label>
+                            <input type="number" step="0.01" id="page_values" name="page_values">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="special_day">Special Day:</label>
+                            <input type="number" step="0.01" id="special_day" name="special_day">
+                        </div>
+                        <div class="container-input">
+                            <label for="operating_systems">Operating Systems:</label>
+                            <input type="number" id="operating_systems" name="operating_systems">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="browser">Browser:</label>
+                            <input type="number" id="browser" name="browser">
+                        </div>
+                        <div class="container-input">
+                            <label for="region">Region:</label>
+                            <input type="number" id="region" name="region">
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="container-input">
+                            <label for="traffic_type">Traffic Type:</label>
+                            <input type="number" id="traffic_type" name="traffic_type">
+                        </div>
+                        <div class="container-input">
+                            <label for="month">Month:</label>
+                            <select id="month" name="month">
+                                <option value="Jan">January</option>
+                                <option value="Feb">February</option>
+                                <option value="Mar">March</option>
+                                <option value="Apr">April</option>
+                                <option value="May">May</option>
+                                <option value="Jun">June</option>
+                                <option value="Jul">July</option>
+                                <option value="Aug">August</option>
+                                <option value="Sep">September</option>
+                                <option value="Oct">October</option>
+                                <option value="Nov">November</option>
+                                <option value="Dec">December</option>
+                            </select>
+                        </div>
+                    </div>
+        
+                    <div class="form-row">
+                        <div class="inline-checkbox">
+                            <label for="weekend">Weekend:</label>
+                            <input type="checkbox" id="weekend" name="weekend">
+                        </div>  
+                    </div>
+                    <div class="form-submit">
+                        <input type="submit" value="Some magic">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const phrases = ["Welcome to our project page", "Enjoy predicting the shopper intention"];
+        let currentPhrase = 0;
+        let letterCount = 0;
+        let isDeleting = false;
+        let typingText = document.getElementById("typing-text");
+
+        function type() {
+            const currentText = phrases[currentPhrase];
+            if (!isDeleting) {
+                typingText.textContent = currentText.slice(0, letterCount++);
+                if (letterCount === currentText.length + 1) {
+                    setTimeout(() => { isDeleting = true; }, 100);
+                }
+            } else {
+                typingText.textContent = currentText.slice(0, letterCount--);
+                if (letterCount === 0) {
+                    isDeleting = false;
+                    currentPhrase = (currentPhrase + 1) % phrases.length;
+                }
+            }
+
+            setTimeout(type, 50);
+        }
+
+        type();
+
+    </script>
+  </body>
+</html>
