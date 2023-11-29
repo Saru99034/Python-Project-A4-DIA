@@ -46,7 +46,7 @@ def predict():
         browser = request.form.get('browser', type=int)
         region = request.form.get('region', type=int)
         traffic_type = request.form.get('traffic_type', type=int)
-        visitor_type = request.form.get('visitor_type')
+        visitor_type = request.form.get('vistor_type')
         weekend = request.form.get('weekend', type=bool)
         features = pd.DataFrame([[
             administrative, administrative_duration, informational,
