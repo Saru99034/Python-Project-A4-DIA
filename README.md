@@ -20,16 +20,22 @@ Table of Contents
    - Normalization and encoding
 
 3. Modeling
-  (i) Logistic Regression
+
+(i) Logistic Regression
+
       - Training on downsampled data
       - Evaluating with confusion matrix, precision, and recall
       - Training on upsampled data and analyzing precision-recall 
         trade-off
-  (ii) Neural Network
+        
+(ii) Neural Network
+  
       - Training MLP on downsampled data
       - Approximating feature importances
       - Training MLP on upsampled data
-  (iii) Random Forest
+      
+(iii) Random Forest
+  
       - Training on downsampled data
       - Training on upsampled data
 
